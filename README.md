@@ -35,7 +35,7 @@ SkyPulse is a modern, responsive weather application built with React that provi
 -  **Charts**: Recharts
 -  **Icons**: Lucide Icons
 -  **State Management**: React Context API
--  **API Integration**: Weather API
+-  **API Integration**: Tomorrow.io Weather API
 
 ## 📦 Installation
 
@@ -49,10 +49,11 @@ cd WeatherApp
 2. Install dependencies:
 
 ```bash
+cd client
 npm install
 ```
 
-3. Create a `.env` file in the root directory and add your API key:
+3. Create a `.env` file in the client directory and add your API key:
 
 ```env
 VITE_WEATHER_API_KEY=your_api_key_here
@@ -64,12 +65,40 @@ VITE_WEATHER_API_KEY=your_api_key_here
 npm run dev
 ```
 
+## 🔑 API Key Configuration
+
+### Getting an API Key
+
+1. Visit [Tomorrow.io](https://www.tomorrow.io/)
+2. Create a free account
+3. Navigate to the developer dashboard
+4. Create a new API key
+5. Copy the API key
+
+### Configuring API Key Locally
+
+Create a `.env` file in the `client` directory:
+
+```
+VITE_WEATHER_API_KEY=your_api_key_here
+```
+
+### Configuring API Key on Vercel
+
+1. Go to your Vercel project dashboard
+2. Navigate to Settings > Environment Variables
+3. Add a new environment variable:
+   -  Name: `VITE_WEATHER_API_KEY`
+   -  Value: your API key from Tomorrow.io
+4. Save and redeploy your application
+
+**Note**: If you deploy without an API key, the application will run in demo mode with simulated data.
+
 ## 🔧 Configuration
 
 The application requires the following environment variables:
 
--  `VITE_WEATHER_API_KEY`: Your Weather API key
--  `VITE_API_BASE_URL`: Base URL for the weather API (optional)
+-  `VITE_WEATHER_API_KEY`: Your Tomorrow.io Weather API key
 
 ## 🛠️ Development
 
@@ -85,10 +114,14 @@ The application requires the following environment variables:
 
 To deploy to Vercel and fix the 404 routing issue:
 
-1. Create a `vercel.json` file in the root directory:
+1. Ensure you have a `vercel.json` file in the root directory:
 
 ```json
 {
+	"version": 2,
+	"framework": "vite",
+	"buildCommand": "cd client && npm install && npm run build",
+	"outputDirectory": "client/dist",
 	"rewrites": [
 		{
 			"source": "/(.*)",
@@ -98,7 +131,9 @@ To deploy to Vercel and fix the 404 routing issue:
 }
 ```
 
-2. Deploy to Vercel:
+2. Set up your environment variables on Vercel (see API Key Configuration above)
+
+3. Deploy to Vercel:
 
 ```bash
 vercel
@@ -128,6 +163,7 @@ The application uses a custom UI component library built with Tailwind CSS, incl
 -  Interactive tooltips
 
 ---
+
 ## 🌐 Live Demo
 
 Check out the live application here: [SkyPulse Live App](https://weather-app-three-rose-71.vercel.app/)
